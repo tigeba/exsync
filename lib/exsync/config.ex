@@ -69,6 +69,12 @@ defmodule ExSync.Config do
     end
   end
 
+  # Look for custom IO events if needed.  For example if using a sync'ed filesystem like unison,
+  # You may want to respond to a :moved_to event
+  def io_events do
+    Application.get_env(application(), :io_events, [:modified])
+  end
+
   def src_dirs do
     src_default_dirs() ++ src_addition_dirs()
   end
