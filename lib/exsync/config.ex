@@ -89,7 +89,8 @@ defmodule ExSync.Config do
         Mix.Dep.cached()
         |> Enum.filter(fn dep -> dep.opts[:path] != nil end)
         |> Enum.map(fn %Mix.Dep{app: app} = dep ->
-            Enum.map(dep.deps, fn d -> d.opts[:build] end)
+            ""
+            #Enum.map(dep.deps, fn d -> d.opts[:build] end)
         end)
 
       self_paths =
