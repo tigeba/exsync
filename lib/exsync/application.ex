@@ -2,12 +2,16 @@ require Logger
 
 defmodule ExSync.Application do
   def start(_, _) do
-    case Mix.env() do
-      :dev ->
-        start_supervisor()
-
-      _ ->
-        Logger.error("ExSync NOT started. Only `:dev` environment is supported.")
+    case Application.get_env(:exsync, :enabled, false) do
+      true ->
+        case :code.module_status(Mix) do
+          :loaded ->
+              start_supervisor()
+          :not_loaded ->
+            Logger.info("ExSync not started. Mix not present.")
+            {:ok, self()}
+        end
+      false ->
         {:ok, self()}
     end
   end
